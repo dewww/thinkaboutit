@@ -1,0 +1,35 @@
+@startuml TAI
+Title Think About It Use Cases
+!include C:/Users/Admin/Dev/plantuml-stdlib/aws/common.puml
+!include C:/Users/Admin/Dev/plantuml-stdlib/aws/General/Internet/Internet.puml
+
+INTERNET(publicInternet)
+:User: <<Browser>> as User
+:Experts: <<Messaging>> as Expert
+
+(Converse Client) as Converse
+(Think About It) as TAI
+(Results Server) as Results
+(Knowledge Corpora) as Knowledge
+'skinparam packageStyle rectangle
+
+User <-> publicInternet
+
+'basic interactions
+publicInternet -> Converse : Questions & \nStatements
+Converse ..> TAI : <<extend>>
+Converse --> publicInternet : Answers & \nClarity Questions
+publicInternet --> Converse : URL
+
+'ask for help
+Expert -> TAI : Answers
+
+'Research Use Cases
+TAI --> publicInternet: Link\nto Results
+TAI -down--> Expert : Questions
+TAI --> Knowledge : Research
+Results ..> TAI : <<extend>>
+TAI -right-> Results : <<callback>>
+publicInternet -> Results
+
+@enduml

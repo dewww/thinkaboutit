@@ -1,0 +1,50 @@
+@startuml class-user-diagram
+package "thinkaboutit.info" {
+     package "info.thinkaboutit.model" {
+        class Questions {
+            - string: Question
+            + string getAnswer()
+            + boolean answerIsReady()
+            + void setQuestion(string)
+            + void setAnswerNow(boolean)
+        }
+
+        class Symbols {
+            - string Symbol
+            - list SymbolReferences
+            + collection getSymbolReferences(string)
+            + void addSymbol(string Symbol, string Reference)
+        }
+
+        Questions <|-- Symbols
+     }
+
+    package "info.thinkaboutit.repository"{
+        interface Repository
+        interface UserRepository{
+            List<User> findUsers()
+        }
+
+        Repository <|--  QuestionRepository
+        Repository <|--  SymbolRepository
+    }
+
+    package "info.thinkaboutit.service "{
+        class UserService{
+            - UserRepository repository
+            + List<User> findUsers()
+        }
+
+         UserService o-- UserRepository
+    }
+
+    package "info.thinkaboutit.controller "{
+        class UserController{
+            -UserService service
+            +List<User> findUsers()
+        }
+
+        UserController o-- UserService
+    }
+}
+@enduml
